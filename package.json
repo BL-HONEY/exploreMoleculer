@@ -35,7 +35,8 @@
     "moleculer-web": "^0.8.0",
     "mongoose": "^5.6.7",
     "nats": "^1.0.1",
-    "redlock": "^4.0.0"
+    "redlock": "^4.0.0",
+    "jsonwebtoken": "8.3.0"
   },
   "engines": {
     "node": ">= 8.x.x"

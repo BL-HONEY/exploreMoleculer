@@ -29,8 +29,8 @@ module.exports = {
 	 */
 	events: {
 		"greeter.register"(user) {
-          console.log("User created:" , user);
-        },
+			console.log("User created:" , user);
+		},
 	},
 
 	/**

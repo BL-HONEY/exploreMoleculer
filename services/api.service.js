@@ -1,6 +1,8 @@
 "use strict";
 
 const ApiGateway = require("moleculer-web");
+const { UnAuthorizedError } = ApiGateway.Errors;
+
 // const express = require("express");       
 // const route = express.Router();  
 module.exports = {
@@ -30,6 +32,7 @@ module.exports = {
 		routes: [{
 			path: "/api",
 			mergeParams: false,
+			authorization: true,
 			use: [
 				function(err, req, res, next) {
 					this.logger.error("Error is occured in middlewares!");
@@ -37,7 +40,8 @@ module.exports = {
 				}
 			],
 			aliases: {
-				"POST users/register": "greeter.register"
+				"POST users/register": "greeter.register",
+				"POST users/login": "greeter.login"
 			},
 			// use:[
 			// 	// Access to any actions in all services under "/api" URL
@@ -63,5 +67,56 @@ module.exports = {
 		assets: {
 			folder: "public"
 		}
-	}
+	},
+
+	
+
+	methods: {
+		/**
+		 * Authorize the request
+		 *
+		 * @param {Context} ctx
+		 * @param {Object} route
+		 * @param {IncomingRequest} req
+		 * @returns {Promise}
+		 */
+		authorize(ctx, route, req) {
+			console.log("i am inside authorize method 84", req);
+			
+			let token;
+			if (req.headers.authorization) {
+				let type = req.headers.authorization.split(" ")[0];
+				if (type === "Token" || type === "Bearer")
+					token = req.headers.authorization.split(" ")[1];
+			}
+
+			return this.Promise.resolve(token)
+				.then(token => {
+					if (token) {
+						// Verify JWT token
+						return ctx.call("greeter.resolveToken", { token })
+							.then(user => {
+								if (user) {
+									this.logger.info("Authenticated via JWT: ", user.email);
+									// Reduce user fields (it will be transferred to other nodes)
+									// ctx.meta.user = _.pick(user, ["_id", "email"]);
+									ctx.meta.user = { _id: user._id , email: user.email};
+
+									ctx.meta.token = token;
+									ctx.meta.userID = user._id;
+								}
+								return user;
+							})
+							.catch(err => {
+								// Ignored because we continue processing if user is not exist
+								return null;
+							});
+					}
+				})
+				.then(user => {
+					if (req.$action.auth == "required" && !user)
+						return this.Promise.reject(new UnAuthorizedError());
+				});
+		},
+	},
 };
