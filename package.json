@@ -1,0 +1,51 @@
+{
+  "name": "try-molecular1",
+  "version": "1.0.0",
+  "description": "My Moleculer microservices project",
+  "scripts": {
+    "dev": "moleculer-runner --repl --hot services",
+    "start": "moleculer-runner",
+    "cli": "moleculer connect NATS",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "lint": "eslint services",
+    "dc:up": "docker-compose up --build -d",
+    "dc:down": "docker-compose down"
+  },
+  "keywords": [
+    "microservices",
+    "moleculer"
+  ],
+  "author": "",
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "moleculer-repl": "^0.5.3",
+    "swagger-ui-express": "^4.0.2"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "express": "^4.17.1",
+    "ioredis": "^4.2.0",
+    "moleculer": "^0.13.0",
+    "moleculer-db": "^0.8.2",
+    "moleculer-db-adapter-mongo": "^0.4.4",
+    "moleculer-db-adapter-mongoose": "^0.8.1",
+    "moleculer-web": "^0.8.0",
+    "mongoose": "^5.6.7",
+    "nats": "^1.0.1",
+    "redlock": "^4.0.0"
+  },
+  "engines": {
+    "node": ">= 8.x.x"
+  },
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "./services",
+    "roots": [
+      "../test"
+    ]
+  }
+}
