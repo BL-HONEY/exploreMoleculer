@@ -33,6 +33,8 @@ module.exports = {
 	// Define transporter. 
 	// More info: https://moleculer.services/docs/0.13/networking.html
 	transporter: "NATS",
+	// transporter: "nats://192.168.0.29:4222",
+
 
 	// Define a cacher. More info: https://moleculer.services/docs/0.13/caching.html
 	cacher: "Redis",

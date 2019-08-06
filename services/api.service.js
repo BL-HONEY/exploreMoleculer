@@ -33,15 +33,18 @@ module.exports = {
 			path: "/api",
 			mergeParams: false,
 			authorization: true,
-			use: [
-				function(err, req, res, next) {
-					this.logger.error("Error is occured in middlewares!");
-					this.sendError(req, res, err);
-				}
-			],
+			// use: [
+			// 	function(err, req, res, next) {
+			// 		this.logger.error("Error is occured in middlewares!");
+			// 		this.sendError(req, res, err);
+			// 	}
+			// ],
 			aliases: {
 				"POST users/register": "greeter.register",
-				"POST users/login": "greeter.login"
+				"POST users/login": "greeter.login",
+				"GET greeter/hello": "greeter.hello",
+				"POST books/add": "books.addBook",
+				"GET books/getallbooks": "books.getBooks"
 			},
 			// use:[
 			// 	// Access to any actions in all services under "/api" URL

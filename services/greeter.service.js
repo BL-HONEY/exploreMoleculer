@@ -155,7 +155,10 @@ module.exports = {
 * @returns
 */
 		hello() {
-			return "Hello Moleculer";
+			console.log("heelo from greeter");
+			
+			return this.broker.call("user.hello");
+			//return "Hello Moleculer";
 		},
 
 		/**

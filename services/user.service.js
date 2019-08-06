@@ -3,7 +3,7 @@ const DbService = require("moleculer-db");
 const { MoleculerClientError } = require("moleculer").Errors;
 
 module.exports = {
-	name: "user",
+	name: "user1",
 
 	/**
 	 * Service settings
